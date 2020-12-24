@@ -84,9 +84,9 @@ function App() {
           {/* title + select input dropdown field */}
           <FormControl className="app__dropdown">
             <Select variant="outlined" value={country}
-              onChange={onCountryChange}
+              onChange={onCountryChange} style={{ backgroundColor: "tomato", color: "#fff", borderColor: "none" }}
             >
-              <MenuItem value="worldwide">Worldwide</MenuItem>
+              <MenuItem value="worldwide" >Worldwide</MenuItem>
               {/* loop through countries */}
               {
                 countries.map((country, i) => (
@@ -114,6 +114,7 @@ function App() {
           <Table countries={tableData} />
           <br></br>
           <h3>Worldwide new cases</h3>
+          <br></br>
           {/* graph */}
           <LineGraph />
         </CardContent>
