@@ -14,6 +14,7 @@ function Table({ countries }) {
        </strong>
       </td>
      </tr>
+
     ))
    }
   </div>

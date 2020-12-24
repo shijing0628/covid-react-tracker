@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react'
 import './App.css';
 import { FormControl, Select, MenuItem, Card, CardContent } from '@material-ui/core'
 import InfoBox from './InfoBox';
-import Map from './Map'
+import MyMap from './Map'
 import Table from './Table'
 import { sortData } from './util';
 import LineGraph from './LineGraph';
+import 'leaflet/dist/leaflet.css';
 
 function App() {
   const [countries, setCountries] = useState(['USA', 'China', 'England']);
   const [country, setCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
+  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
+  const [mapZoom, setMapZoom] = useState(3);
 
   const onCountryChange = async (e) => {
     const countryCode = e.target.value;
@@ -26,7 +29,10 @@ function App() {
     await fetch(url)
       .then(response => response.json())
       .then(data => {
-        setCountryInfo(data)
+        setCountryInfo(data);
+        setCountry(countryCode);
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        setMapZoom(5);
       })
   }
 
@@ -90,13 +96,14 @@ function App() {
           <InfoBox title="Death" total={countryInfo.deaths} cases={countryInfo.todayDeaths} />
         </div>
         {/* map */}
-        <Map />
+        <MyMap center={mapCenter} zoom={mapZoom} />
       </div>
       <Card className="app__right">
         <CardContent>
           <h3>Live Cases by country</h3>
           {/* table */}
           <Table countries={tableData} />
+          <br></br>
           <h3>Worldwide new cases</h3>
           {/* graph */}
           <LineGraph />
