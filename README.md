@@ -1,3 +1,10 @@
+### React create a covid tracker app
+
+2020-12-23
+
+Best peer programming: vs live share
+https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
