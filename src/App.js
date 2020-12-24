@@ -15,26 +15,8 @@ function App() {
   const [tableData, setTableData] = useState([]);
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
   const [mapZoom, setMapZoom] = useState(3);
-
-  const onCountryChange = async (e) => {
-    const countryCode = e.target.value;
-    setCountry(countryCode)
-
-    //https://disease.sh/v3/covid-19/all
-    //https://disease.sh/v3/covid-19/countries/[COUNTRY_CODE]
-    const url = countryCode === 'worldwide'
-      ? 'https://disease.sh/v3/covid-19/all'
-      : `https://disease.sh/v3/covid-19/countries/${countryCode}`
-
-    await fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        setCountryInfo(data);
-        setCountry(countryCode);
-        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        setMapZoom(5);
-      })
-  }
+  const [mapCountries, setMapCountries] = useState([])
+  const [casesType, setCasesType] = useState("cases");
 
 
   //first load for worldwide data
@@ -63,10 +45,35 @@ function App() {
           const sortedData = sortData(data);
           setTableData(sortedData)
           setCountries(countries)
+          setMapCountries(data)
         })
     }
     getCountriesData()
   }, [])
+
+
+  const onCountryChange = async (e) => {
+    const countryCode = e.target.value;
+    setCountry(countryCode)
+
+    //https://disease.sh/v3/covid-19/all
+    //https://disease.sh/v3/covid-19/countries/[COUNTRY_CODE]
+    const url = countryCode === 'worldwide'
+      ? 'https://disease.sh/v3/covid-19/all'
+      : `https://disease.sh/v3/covid-19/countries/${countryCode}`
+
+    await fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        setCountryInfo(data);
+        setCountry(countryCode);
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        setMapZoom(5);
+      })
+  }
+
+
+
 
   return (
     <div className="app">
@@ -88,15 +95,17 @@ function App() {
             </Select>
           </FormControl>
         </div>
+        <h2 style={{ width: '100%' }}>Today's update! </h2>
 
         {/* 3 info boxes */}
         <div className="app__stats">
-          <InfoBox title="Covid Cases" total={countryInfo.cases} cases={countryInfo.todayCases} />
-          <InfoBox title="Recovered" total={countryInfo.recovered} cases={countryInfo.todayRecovered} />
-          <InfoBox title="Death" total={countryInfo.deaths} cases={countryInfo.todayDeaths} />
+          <br></br>
+          <InfoBox title="Covid Cases" total={countryInfo.cases} cases={countryInfo.todayCases} onClick={(e) => setCasesType("cases")} />
+          <InfoBox title="Recovered" total={countryInfo.recovered} cases={countryInfo.todayRecovered} onClick={(e) => setCasesType("recovered")} />
+          <InfoBox title="Death" total={countryInfo.deaths} cases={countryInfo.todayDeaths} onClick={(e) => setCasesType("deaths")} />
         </div>
         {/* map */}
-        <MyMap center={mapCenter} zoom={mapZoom} />
+        <MyMap center={mapCenter} zoom={mapZoom} countries={mapCountries} casesType={casesType} />
       </div>
       <Card className="app__right">
         <CardContent>

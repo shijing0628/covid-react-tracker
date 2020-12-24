@@ -13,6 +13,9 @@ https://disease.sh/v3/covid-19/countries
 DB in firebase
 https://console.firebase.google.com/u/0/project/covid-19-tracker-11a1b/overview
 
+Using libs:
+numeral, react-leaflet,react-chartjs-2
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
