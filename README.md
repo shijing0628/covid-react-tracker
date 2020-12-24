@@ -1,9 +1,17 @@
 ### React create a covid tracker app
 
+Hooks + material UI
+
 2020-12-23
 
 Best peer programming: vs live share
 https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare
+
+API reference for covid tracker
+https://disease.sh/v3/covid-19/countries
+
+DB in firebase
+https://console.firebase.google.com/u/0/project/covid-19-tracker-11a1b/overview
 
 # Getting Started with Create React App
 
