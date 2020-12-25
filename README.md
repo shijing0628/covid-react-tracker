@@ -17,7 +17,7 @@ Using libs:
 numeral, react-leaflet,react-chartjs-2
 
 Webapp screenshots
-![](2020-12-24-16-29-00.png)
+![](2020-12-24-16-36-10.png)
 
 ![](2020-12-24-16-29-39.png)
 

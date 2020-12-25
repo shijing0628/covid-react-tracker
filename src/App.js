@@ -4,13 +4,13 @@ import { FormControl, Select, MenuItem, Card, CardContent } from '@material-ui/c
 import InfoBox from './InfoBox';
 import MyMap from './Map'
 import Table from './Table'
-import { sortData } from './util';
+import { sortData, prettyPrintStat } from './util';
 import LineGraph from './LineGraph';
 import 'leaflet/dist/leaflet.css';
 
 function App() {
-  const [countries, setCountries] = useState(['USA', 'China', 'England']);
-  const [country, setCountry] = useState("worldwide");
+  const [countries, setCountries] = useState([]);
+  const [country, setInputCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
@@ -54,7 +54,7 @@ function App() {
 
   const onCountryChange = async (e) => {
     const countryCode = e.target.value;
-    setCountry(countryCode)
+
 
     //https://disease.sh/v3/covid-19/all
     //https://disease.sh/v3/covid-19/countries/[COUNTRY_CODE]
@@ -66,12 +66,11 @@ function App() {
       .then(response => response.json())
       .then(data => {
         setCountryInfo(data);
-        setCountry(countryCode);
+        setInputCountry(countryCode);
         setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        setMapZoom(5);
+        setMapZoom(4);
       })
   }
-
 
 
 
@@ -95,17 +94,33 @@ function App() {
             </Select>
           </FormControl>
         </div>
-        <h2 style={{ width: '100%' }}>Today's update! </h2>
+
 
         {/* 3 info boxes */}
         <div className="app__stats">
           <br></br>
-          <InfoBox title="Covid Cases" total={countryInfo.cases} cases={countryInfo.todayCases} onClick={(e) => setCasesType("cases")} />
-          <InfoBox title="Recovered" total={countryInfo.recovered} cases={countryInfo.todayRecovered} onClick={(e) => setCasesType("recovered")} />
-          <InfoBox title="Death" total={countryInfo.deaths} cases={countryInfo.todayDeaths} onClick={(e) => setCasesType("deaths")} />
+          <InfoBox title="Today's Covid Cases"
+            active={casesType === "cases"}
+            total={prettyPrintStat(countryInfo.cases)}
+            cases={prettyPrintStat(countryInfo.todayCases)}
+            onClick={(e) => setCasesType("cases")}
+            isRed />
+          <InfoBox title="Today's Recovered"
+            active={casesType === "recovered"}
+            total={prettyPrintStat(countryInfo.recovered)}
+            cases={prettyPrintStat(countryInfo.todayRecovered)}
+            onClick={(e) => setCasesType("recovered")} />
+          <InfoBox title="Today's Death"
+            active={casesType === "deaths"}
+            total={prettyPrintStat(countryInfo.deaths)}
+            cases={prettyPrintStat(countryInfo.todayDeaths)}
+            onClick={(e) => setCasesType("deaths")} />
         </div>
         {/* map */}
-        <MyMap center={mapCenter} zoom={mapZoom} countries={mapCountries} casesType={casesType} />
+        <MyMap countries={mapCountries}
+          casesType={casesType}
+          center={mapCenter}
+          zoom={mapZoom} />
       </div>
       <Card className="app__right">
         <CardContent>
