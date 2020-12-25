@@ -1,7 +1,20 @@
 import { Circle, Popup } from 'react-leaflet'
 import React from 'react'
 import numeral from 'numeral'
+//general functions in this file. sort live cases
+export const sortData = data => {
+ const sortedData = [...data];
 
+ sortedData.sort((a, b) => {
+  if (a.cases > b.cases) {
+   return -1;
+  }
+  else {
+   return 1;
+  }
+ })
+ return sortedData;
+}
 const casesTypeColors = {
  cases: {
   hex: "#CC1034",
@@ -18,20 +31,7 @@ const casesTypeColors = {
 };
 
 
-//general functions in this file. sort live cases
-export const sortData = data => {
- const sortedData = [...data];
 
- sortedData.sort((a, b) => {
-  if (a.cases > b.cases) {
-   return -1;
-  }
-  else {
-   return 1;
-  }
- })
- return sortedData;
-}
 //draw circles on the map with interactive
 export const showDataOnMap = (data, casesType = 'cases') => (
  data.map(country => (
