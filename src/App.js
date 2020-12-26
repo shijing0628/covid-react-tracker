@@ -7,13 +7,13 @@ import Table from './Table'
 import { sortData, prettyPrintStat } from './util';
 import LineGraph from './LineGraph';
 import 'leaflet/dist/leaflet.css';
-
+import numeral from "numeral";
 function App() {
   const [countries, setCountries] = useState([]);
   const [country, setInputCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
-  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
+  const [mapCenter, setMapCenter] = useState([34.80746, -40.4796]);
   const [mapZoom, setMapZoom] = useState(3);
   const [mapCountries, setMapCountries] = useState([])
   const [casesType, setCasesType] = useState("cases");
@@ -102,18 +102,21 @@ function App() {
           <InfoBox title="Today's Covid Cases"
             active={casesType === "cases"}
             total={prettyPrintStat(countryInfo.cases)}
-            cases={prettyPrintStat(countryInfo.todayCases)}
+
+            cases={numeral(countryInfo.todayCases).format("0,0")}
             onClick={(e) => setCasesType("cases")}
             isRed />
           <InfoBox title="Today's Recovered"
             active={casesType === "recovered"}
             total={prettyPrintStat(countryInfo.recovered)}
-            cases={prettyPrintStat(countryInfo.todayRecovered)}
+
+            cases={numeral(countryInfo.todayRecovered).format("0,0")}
             onClick={(e) => setCasesType("recovered")} />
           <InfoBox title="Today's Death"
             active={casesType === "deaths"}
             total={prettyPrintStat(countryInfo.deaths)}
-            cases={prettyPrintStat(countryInfo.todayDeaths)}
+
+            cases={numeral(countryInfo.todayDeaths).format("0,0")}
             onClick={(e) => setCasesType("deaths")} />
         </div>
         {/* map */}

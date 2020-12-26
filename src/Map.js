@@ -8,6 +8,7 @@ function MyMap({ countries, casesType, center, zoom }) {
 
  return (
   <div className="map">
+
    <MapContainer center={center} zoom={zoom} >
     <TileLayer
      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

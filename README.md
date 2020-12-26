@@ -10,9 +10,6 @@ https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare
 API reference for covid tracker
 https://disease.sh/v3/covid-19/countries
 
-DB in firebase
-https://console.firebase.google.com/u/0/project/covid-19-tracker-11a1b/overview
-
 Using libs:
 numeral, react-leaflet,react-chartjs-2
 
